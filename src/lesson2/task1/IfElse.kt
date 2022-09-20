@@ -184,9 +184,9 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
     val midi = mid (a,b,c)
 
     return if ((c < a + b) && (b < a + c) && (a < b + c)) {
-        if (maxi*maxi<mini*mini+midi*midi){
+        if (maxi * maxi < mini * mini + midi * midi){
             0
-        } else if(maxi*maxi==mini*mini+midi*midi){
+        } else if(maxi * maxi == mini * mini + midi * midi){
             1
         } else 2
     } else -1
@@ -203,7 +203,7 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
  */
 fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
     return if (a<c && b<d && b>c){
-        b-c
+        b - c
     } else if (a>c && d>b){
         b-a
     } else if (a>c && a<d && b>d){
@@ -216,5 +216,13 @@ fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
         0
     } else if (a==c && b==d){
         b-a
-    } else -1
+    } else if (a>c && b==d){
+        b-a
+    } else if (c>a && b==d){
+        d-c
+    } else if (c==a && b<d){
+        b-a
+    } else if (c==a && b>d){
+        d-a
+    } else -10000
 }
