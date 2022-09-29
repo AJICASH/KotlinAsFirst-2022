@@ -84,6 +84,7 @@ class Tests {
         assertEquals(102334155, fib(40))
         assertEquals(1134903170, fib(45))
         assertEquals(1836311903, fib(46))
+        assertEquals(12586269025, fib(50))
         // Just to calculate it
         fib(50)
     }
@@ -219,6 +220,8 @@ class Tests {
     fun squareSequenceDigit() {
         assertEquals(1, squareSequenceDigit(1))
         assertEquals(4, squareSequenceDigit(2))
+        assertEquals(9, squareSequenceDigit(3))
+        assertEquals(1, squareSequenceDigit(4))
         assertEquals(5, squareSequenceDigit(7))
         assertEquals(6, squareSequenceDigit(12))
         assertEquals(0, squareSequenceDigit(17))

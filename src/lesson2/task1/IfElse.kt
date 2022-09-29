@@ -204,5 +204,5 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
 fun segmentLength(a: Int, b: Int, c: Int, d: Int): Int {
     return if ((a < c && b < c) || (c < a && d < a )){
         -1
-    } else abs(max(a,c)-min(b,d))
+    } else abs(max(a,c) - min(b,d))
 }

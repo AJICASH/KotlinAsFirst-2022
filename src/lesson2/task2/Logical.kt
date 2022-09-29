@@ -21,11 +21,11 @@ fun pointInsideCircle(x: Double, y: Double, x0: Double, y0: Double, r: Double) =
  */
 fun isNumberHappy(number: Int): Boolean {
     var num = number
-    val a = number/1000
-    val b = (number/100)%10
-    val c = (number/10)%10
+    val a = number / 1000
+    val b = (number / 100) % 10
+    val c = (number / 10 ) % 10
     val d = number % 10
-    return if (a+b == c+d){
+    return if (a + b == c + d){
        true
     } else false
 }
@@ -68,7 +68,7 @@ fun circleInside(
     x1: Double, y1: Double, r1: Double,
     x2: Double, y2: Double, r2: Double
 ): Boolean {
-    return if ((x1+r1 <= x2 + r2) && (x1-r1>=x2-r2) && (y1 +r1 <= y2 + r2) && (y1-r1>=y2-r2)){
+    return if ((x1 + r1 <= x2 + r2) && (x1 - r1 >= x2 - r2) && (y1 +r1 <= y2 + r2) && (y1 - r1 >= y2 - r2)){
         true
     }else false
 }
@@ -83,17 +83,17 @@ fun circleInside(
  * Вернуть true, если кирпич пройдёт
  */
 fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
-    return if (a <= r && b<=s){
+    return if (a <= r && b <= s){
         true
-    } else if(b<=r && a<=s){
+    } else if(b <= r && a <= s){
         true
-    } else if (b <= r && c<=s){
+    } else if (b <= r && c <= s){
         true
-    } else if(c<=r && b<=s){
+    } else if(c <= r && b <= s){
         true
-    }else if (a <= r && c<=s){
+    }else if (a <= r && c <= s){
         true
-    } else if(c<=r && a<=s){
+    } else if(c <= r && a <= s){
         true
     } else false
 }
