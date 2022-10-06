@@ -79,8 +79,9 @@ fun digitNumber(n: Int): Int {
     var number = n
     if (number == 0) return 1
     while (number > 0) {
-        number /= 10
         count++
+        number /= 10
+
     }
     return count
 }
@@ -142,18 +143,19 @@ fun minDivisor(n: Int): Int {
  *
  * Для заданного числа n > 1 найти максимальный делитель, меньший n
  */
-fun maxDivisor(n: Int): Int {
-    val num = n
-    var maxi = -2
-    for (i in 1..num - 1) {
-        if (num % i == 0) {
-            if (maxi <= i) {
-                maxi = i
-            }
-        }
-    }
-    return maxi
-}
+fun maxDivisor(n: Int): Int = n / minDivisor(n)
+//    val num = n
+//    var maxi = -2
+//    for (i in 1..num - 1) {
+//        if (num % i == 0) {
+//            if (maxi <= i) {
+//                maxi = i
+//            }
+//        }
+//    }
+//    return maxi
+
+
 
 /**
  * Простая (2 балла)
@@ -198,14 +200,23 @@ fun lcm(m: Int, n: Int): Int {
 //        }
 //    }
 //    return 1
-    var i = max(m, n)
-    return if (m != n) {
-        while (i % m != i % n) {
-            i++
-        }
-        i
-    } else m
-
+//    var i = max(m, n)
+//    return if (m != n) {
+//        while (i % m != i % n ) {
+//            i++
+//        }
+//        i
+//    } else m
+    var x = m
+    var y = n
+    var s = 0
+    while (x != 0 && y != 0){
+        if (x > y){
+            x %= y
+        } else y %= x
+    }
+    s = x + y
+    return m * n / s
 }
 
 /**
@@ -216,18 +227,27 @@ fun lcm(m: Int, n: Int): Int {
  * Например, 25 и 49 взаимно простые, а 6 и 8 -- нет.
  */
 fun isCoPrime(m: Int, n: Int): Boolean {
-    var m1 = m
-    var n1 = n
-    var nod = 1
-    while (m1 != n1){
-        if (m1 > n1){
-             m1 = m1 - n1
-        } else n1 = n1 - m1
-        nod = m1
+//    var m1 = m
+//    var n1 = n
+//    var nod = 1
+//    while (m1 != n1){
+//        if (m1 > n1){
+//             m1 = m1 - n1
+//        } else n1 = n1 - m1
+//        nod = m1
+//    }
+//    return if (nod == 1) {
+//        true
+//    } else false
+    var x = m
+    var y = n
+    var s = 0
+    while (x != 0 && y != 0){
+        if (x > y){
+            x %= y
+        } else y %= x
     }
-    return if (nod == 1) {
-        true
-    } else false
+    return (x + y) == 1
 
 }
 
@@ -268,12 +288,12 @@ fun revert(n: Int): Int {
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun isPalindrome(n: Int): Boolean {
-    val a = n
-    return if (revert(n) == a){
-        true
-    } else false
-}
+fun isPalindrome(n: Int): Boolean = n == revert(n)
+//    val a = n
+//    return if (revert(n) == a){
+//        true
+//    } else false
+
 
 /**
  * Средняя (3 балла)
@@ -284,44 +304,52 @@ fun isPalindrome(n: Int): Boolean {
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun hasDifferentDigits(n: Int): Boolean {
-    var n1 = n
-    var a0 = 0
-    var a1 = 0
-    var a2 = 0
-    var a3 = 0
-    var a4 = 0
-    var a5 = 0
-    var a6 = 0
-    var a7 = 0
-    var a8 = 0
-    var a9 = 0
-    while (n1 > 0){
-        if (n1 % 10 == 0){
-            a0 = 1
-        } else if (n1 % 10 == 1){
-            a1 = 1
-        }else if (n1 % 10 == 2){
-            a2 = 1
-        }else if (n1 % 10 == 3){
-            a3 = 1
-        }else if (n1 % 10 == 4){
-            a4 = 1
-        }else if (n1 % 10 == 5){
-            a5 = 1
-        }else if (n1 % 10 == 6){
-            a6 = 1
-        }else if (n1 % 10 == 7){
-            a7 = 1
-        }else if (n1 % 10 == 8){
-            a8 = 1
-        }else if (n1 % 10 == 9){
-            a9 = 1
-            }
-        n1 /= 10
-        }
-    return if (a0 + a1 + a2 + a3 + a4 + a5 + a6 + a7 + a8 + a9 > 1){
-        true
-    } else false
+//    var n1 = n
+//    var a0 = 0
+//    var a1 = 0
+//    var a2 = 0
+//    var a3 = 0
+//    var a4 = 0
+//    var a5 = 0
+//    var a6 = 0
+//    var a7 = 0
+//    var a8 = 0
+//    var a9 = 0
+//    while (n1 > 0){
+//        if (n1 % 10 == 0){
+//            a0 = 1
+//        } else if (n1 % 10 == 1){
+//            a1 = 1
+//        }else if (n1 % 10 == 2){
+//            a2 = 1
+//        }else if (n1 % 10 == 3){
+//            a3 = 1
+//        }else if (n1 % 10 == 4){
+//            a4 = 1
+//        }else if (n1 % 10 == 5){
+//            a5 = 1
+//        }else if (n1 % 10 == 6){
+//            a6 = 1
+//        }else if (n1 % 10 == 7){
+//            a7 = 1
+//        }else if (n1 % 10 == 8){
+//            a8 = 1
+//        }else if (n1 % 10 == 9){
+//            a9 = 1
+//            }
+//        n1 /= 10
+//        }
+//    return if (a0 + a1 + a2 + a3 + a4 + a5 + a6 + a7 + a8 + a9 > 1){
+//        true
+//    } else false
+    var k = n / 10
+    val c = n % 10
+    while (k > 0){
+       if (k % 10 == c){
+           k /= 10
+       } else return true
+    }
+    return false
 }
 /**
  * Средняя (4 балла)
@@ -373,30 +401,30 @@ fun squareSequenceDigit(n: Int): Int {
 //        }
 //    }
 //    return res
-    var chislosqr = 0
-    var chislosqr2 = 0
+    var numbersqr = 0
+    var numbersqr2 = 0
     var res = 0
     var nomer = 0
     var minus = 0
     var counter = 0
     var result = 0
     for (i in 1..n){
-        chislosqr = i * i
+        numbersqr = i * i
         nomer = 0
-        while (chislosqr != 0){
+        while (numbersqr != 0){
             nomer++
-            chislosqr /= 10
+            numbersqr /= 10
         }
         res += nomer
         if (n <= res) {
             minus = res - n
-            chislosqr2 = i * i
+            numbersqr2 = i * i
             counter = 0
-            while (chislosqr2 != 0){
+            while (numbersqr2 != 0){
                 if (counter == minus){
-                    result = chislosqr2 % 10
+                    result = numbersqr2 % 10
                 }
-                chislosqr2 /= 10
+                numbersqr2 /= 10
                 counter++
             }
         }
@@ -434,30 +462,30 @@ fun fibSequenceDigit(n: Int): Int {
 //        }
 //    }
 //    return res
-    var chislosqr = 0
-    var chislosqr2 = 0
+    var numbersqr = 0
+    var numbersqr2 = 0
     var res = 0
     var nomer = 0
     var minus = 0
     var counter = 0
     var result = 0
     for (i in 1..n){
-        chislosqr = fib(i)
+        numbersqr = fib(i)
         nomer = 0
-        while (chislosqr != 0){
+        while (numbersqr != 0){
             nomer++
-            chislosqr /= 10
+            numbersqr /= 10
         }
         res += nomer
         if (n <= res) {
             minus = res - n
-            chislosqr2 = fib(i)
+            numbersqr2 = fib(i)
             counter = 0
-            while (chislosqr2 != 0){
+            while (numbersqr2 != 0){
                 if (counter == minus){
-                    result = chislosqr2 % 10
+                    result = numbersqr2 % 10
                 }
-                chislosqr2 /= 10
+                numbersqr2 /= 10
                 counter++
             }
         }

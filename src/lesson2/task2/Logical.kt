@@ -25,9 +25,7 @@ fun isNumberHappy(number: Int): Boolean {
     val b = (number / 100) % 10
     val c = (number / 10 ) % 10
     val d = number % 10
-    return if (a + b == c + d){
-       true
-    } else false
+    return a + b == c + d
 }
 
 /**
@@ -38,14 +36,12 @@ fun isNumberHappy(number: Int): Boolean {
  * Считать, что ферзи не могут загораживать друг друга.
  */
 fun queenThreatens(x1: Int, y1: Int, x2: Int, y2: Int): Boolean {
-    return if ((x1 == x2 || y1 == y2) || (abs(x1 - x2) == abs(y1 - y2))) {
-        true
-    } else if (x1 == x2 || y1 == y2) {
-        true
-    } else if (abs(x1 - x2) == abs(y1 - y2)) {
-        true
-    } else false
-
+    return when{
+        ((x1 == x2 || y1 == y2) || (abs(x1 - x2) == abs(y1 - y2))) -> true
+        (x1 == x2 || y1 == y2) -> true
+        (abs(x1 - x2) == abs(y1 - y2)) -> true
+        else -> false
+    }
 }
 
 
@@ -67,11 +63,9 @@ fun daysInMonth(month: Int, year: Int): Int = TODO()
 fun circleInside(
     x1: Double, y1: Double, r1: Double,
     x2: Double, y2: Double, r2: Double
-): Boolean {
-    return if ((x1 + r1 <= x2 + r2) && (x1 - r1 >= x2 - r2) && (y1 +r1 <= y2 + r2) && (y1 - r1 >= y2 - r2)){
-        true
-    }else false
-}
+): Boolean = ((x1 + r1 <= x2 + r2) && (x1 - r1 >= x2 - r2) && (y1 +r1 <= y2 + r2) && (y1 - r1 >= y2 - r2))
+
+
 
 /**
  * Средняя (3 балла)
@@ -83,18 +77,14 @@ fun circleInside(
  * Вернуть true, если кирпич пройдёт
  */
 fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
-    return if (a <= r && b <= s){
-        true
-    } else if(b <= r && a <= s){
-        true
-    } else if (b <= r && c <= s){
-        true
-    } else if(c <= r && b <= s){
-        true
-    }else if (a <= r && c <= s){
-        true
-    } else if(c <= r && a <= s){
-        true
-    } else false
+    return when{
+        (a <= r && b <= s) -> true
+        (b <= r && a <= s) -> true
+            (b <= r && c <= s) -> true
+            (c <= r && b <= s) -> true
+            (a <= r && c <= s) -> true
+            (c <= r && a <= s) -> true
+        else -> false
+    }
 }
 

@@ -103,8 +103,11 @@ fun timeForHalfWay(
     t3: Double, v3: Double
 ): Double {
     val s = t1 * v1 + t2 * v2 + t3 * v3
-    val t = t1 + t2 + t3
-    return 0.0
+    return when{
+        s / 2 <= t1 * v1 -> s / 2 / v1
+        s / 2 <= t1 * v1 + t2 * v2 -> t1 + (s / 2 - t1 * v1) / v2
+        else -> t1 + t2 + (s / 2 - t1 * v1 - t2 * v2) / v3
+    }
 }
 
 /**
@@ -121,16 +124,13 @@ fun whichRookThreatens(
     rookX1: Int, rookY1: Int,
     rookX2: Int, rookY2: Int
 ): Int {
-    return if ((kingX != rookX1 && kingY != rookY1) && (kingX != rookX2 && kingY != rookY2)) {
-        0
-    } else if ((kingX == rookX1 || kingY == rookY1) && (kingX == rookX2 || kingY == rookY2)) {
-        3
-    } else if (kingX == rookX1 || kingY == rookY1) {
-        1
-    } else if (kingX == rookX2 || kingY == rookY2) {
-        2
-    } else -1
-
+    return when {
+        ((kingX != rookX1 && kingY != rookY1) && (kingX != rookX2 && kingY != rookY2)) -> 0
+        ((kingX == rookX1 || kingY == rookY1) && (kingX == rookX2 || kingY == rookY2)) -> 3
+        (kingX == rookX1 || kingY == rookY1) -> 1
+        (kingX == rookX2 || kingY == rookY2) -> 2
+        else -> -1
+        }
 }
 
 /**
@@ -148,16 +148,13 @@ fun rookOrBishopThreatens(
     rookX: Int, rookY: Int,
     bishopX: Int, bishopY: Int
 ): Int {
-    return if ((kingX != rookX && kingY != rookY) && (abs(bishopX - kingX) != abs(bishopY - kingY))) {
-        0
-    } else if ((kingX == rookX || kingY == rookY) && (abs(bishopX - kingX) == abs(bishopY - kingY))) {
-        3
-    } else if (kingX == rookX || kingY == rookY) {
-        1
-    } else if (abs(bishopX - kingX) == abs(bishopY - kingY)) {
-        2
-    } else -1
-
+    return when{
+        ((kingX != rookX && kingY != rookY) && (abs(bishopX - kingX) != abs(bishopY - kingY))) -> 0
+        ((kingX == rookX || kingY == rookY) && (abs(bishopX - kingX) == abs(bishopY - kingY))) -> 3
+        (kingX == rookX || kingY == rookY) -> 1
+        (abs(bishopX - kingX) == abs(bishopY - kingY)) -> 2
+        else -> -1
+    }
 }
 
 /**
@@ -169,11 +166,11 @@ fun rookOrBishopThreatens(
  * Если такой треугольник не существует, вернуть -1.
  */
 fun mid(a: Double, b: Double, c: Double): Double {
-    return if (((a <= b) && (b <= c)) || ((c <= b) && (b <= a))) {
-        b
-    } else if (((b <= a) && (a <= c)) || ((c <= a) && (a <= b))) {
-        a
-    } else c
+    return when{
+        (((a <= b) && (b <= c)) || ((c <= b) && (b <= a))) -> b
+        ((b <= a) && (a <= c)) || ((c <= a) && (a <= b)) -> a
+        else -> c
+    }
 
 }
 
