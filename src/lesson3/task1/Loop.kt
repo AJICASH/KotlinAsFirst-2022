@@ -97,20 +97,17 @@ fun fib(n: Int): Int {
     var fibres = 0
     var fib1 = 1
     var fib2 = 1
-    for (i in 3 ..n) {
+    for (i in 3..n) {
         fibres = fib1 + fib2
         fib1 = fib2
         fib2 = fibres
-
     }
     return if (n == 1 || n == 2) {
         1
     } else {
         fibres
     }
-
     return 0
-
 }
 
 
@@ -260,21 +257,24 @@ fun isCoPrime(m: Int, n: Int): Boolean {
  */
 fun revert(n: Int): Int {
     var n1 = n
-    var n2 = n
     var res = 0
-    var hod = 0
-    var count = 0
     var cifra = 0
+//    while (n1 > 0){
+//        n1 = n1 / 10
+//        count++
+//    }
+//    while (n2 > 0){
+//        cifra = n2 % 10
+//        hod = 10.toFloat().pow(count - 1).toInt() * cifra
+//        n2 = n2 / 10
+//        count--
+//        res += hod
+//    }
+//    return res
     while (n1 > 0){
-        n1 = n1 / 10
-        count++
-    }
-    while (n2 > 0){
-        cifra = n2 % 10
-        hod = 10.toFloat().pow(count - 1).toInt() * cifra
-        n2 = n2 / 10
-        count--
-        res += hod
+        cifra = n1 % 10
+        res = res * 10 + cifra
+        n1 /= 10
     }
     return res
 }

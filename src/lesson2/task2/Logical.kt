@@ -80,10 +80,10 @@ fun brickPasses(a: Int, b: Int, c: Int, r: Int, s: Int): Boolean {
     return when{
         (a <= r && b <= s) -> true
         (b <= r && a <= s) -> true
-            (b <= r && c <= s) -> true
-            (c <= r && b <= s) -> true
-            (a <= r && c <= s) -> true
-            (c <= r && a <= s) -> true
+        (b <= r && c <= s) -> true
+        (c <= r && b <= s) -> true
+        (a <= r && c <= s) -> true
+        (c <= r && a <= s) -> true
         else -> false
     }
 }

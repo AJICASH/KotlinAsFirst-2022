@@ -130,7 +130,7 @@ fun whichRookThreatens(
         (kingX == rookX1 || kingY == rookY1) -> 1
         (kingX == rookX2 || kingY == rookY2) -> 2
         else -> -1
-        }
+    }
 }
 
 /**
@@ -165,28 +165,29 @@ fun rookOrBishopThreatens(
  * прямоугольным (вернуть 1) или тупоугольным (вернуть 2).
  * Если такой треугольник не существует, вернуть -1.
  */
-fun mid(a: Double, b: Double, c: Double): Double {
-    return when{
-        (((a <= b) && (b <= c)) || ((c <= b) && (b <= a))) -> b
-        ((b <= a) && (a <= c)) || ((c <= a) && (a <= b)) -> a
-        else -> c
-    }
-
-}
+//fun mid(a: Double, b: Double, c: Double): Double {
+//    return when{
+//        (((a <= b) && (b <= c)) || ((c <= b) && (b <= a))) -> b
+//        ((b <= a) && (a <= c)) || ((c <= a) && (a <= b)) -> a
+//        else -> c
+//    }
+//
+//}
 
 
 fun triangleKind(a: Double, b: Double, c: Double): Int {
     val maxi = max(max(a,b),c)
     val mini = min(min(a,b),c)
-    val midi = mid (a,b,c)
+    val midi = a + b + c - maxi - mini
 
-    return if ((c < a + b) && (b < a + c) && (a < b + c)) {
-        if (maxi * maxi < mini * mini + midi * midi){
-            0
-        } else if(maxi * maxi == mini * mini + midi * midi){
-            1
-        } else 2
-    } else -1
+    if ((c < a + b) && (b < a + c) && (a < b + c)) {
+        return when {
+            maxi * maxi < mini * mini + midi * midi -> 0
+            maxi * maxi == mini * mini + midi * midi -> 1
+            else -> 2
+        }
+    }
+    return -1
 }
 
 

@@ -270,7 +270,29 @@ fun convert(n: Int, base: Int): List<Int> {
  * Использовать функции стандартной библиотеки, напрямую и полностью решающие данную задачу
  * (например, n.toString(base) и подобные), запрещается.
  */
-fun convertToString(n: Int, base: Int): String = ""
+fun convertToString(n: Int, base: Int): String {
+    var n2 = n
+    var n3 = n
+    val list = mutableListOf<Int>()
+    while (n2 > 0){
+        list.add(n2 % base)
+        n2 /= base
+    }
+    list.reversed()
+    var count = 10
+    var string = ""
+    for (i in 0 until list.size){
+        if (list[i] >= 10){
+            for (j in 'a'..'z'){
+                if (list[i] == count){
+                    string += j
+                    count++
+                }
+            }
+        } else string = list[i].toString() + string
+    }
+    return string
+}
 
 
 /**
