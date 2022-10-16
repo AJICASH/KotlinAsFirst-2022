@@ -226,9 +226,44 @@ class Tests {
         assertEquals("MCMLXXVIII", roman(1978))
         assertEquals("DCXCIV", roman(694))
         assertEquals("XLIX", roman(49))
+        assertEquals("IV", roman(4))
+    }
+    @Test
+    fun firsttrio() {
+        assertEquals("триста семьдесят пять тысяч", firsttrio(375))
+        assertEquals("шестьсот шесть тысяч", firsttrio(606))
+        assertEquals("шестьсот тысяч", firsttrio(600))
+        assertEquals("шестьсот шестьдесят две тысячи", firsttrio(662))
+        assertEquals("шестьсот девятнадцать тысяч", firsttrio(619))
+        assertEquals("шестьсот двадцать тысяч", firsttrio(620))
+        assertEquals("пятьсот двенадцать тысяч", firsttrio(512))
+        assertEquals("двенадцать тысяч", firsttrio(12))
+        assertEquals("одна тысяча", firsttrio(1))
+        assertEquals("три тысячи", firsttrio(3))
+        assertEquals("двадцать две тысячи", firsttrio(22))
+
+
+
+
+    }
+    @Test
+    fun secondtrio() {
+        assertEquals("триста семьдесят пять", secondtrio(375))
+        assertEquals("шестьсот шесть", secondtrio(606))
+        assertEquals("шестьсот", secondtrio(600))
+        assertEquals("шестьсот шестьдесят два", secondtrio(662))
+        assertEquals("шестьсот девятнадцать", secondtrio(619))
+        assertEquals("шестьсот двадцать", secondtrio(620))
+        assertEquals("пятьсот двенадцать", secondtrio(512))
+        assertEquals("двадцать два", secondtrio(22))
+        assertEquals("двенадцать", secondtrio(12))
+        assertEquals("один", secondtrio(1))
+        assertEquals("три", secondtrio(3))
+
     }
 
-    @Test
+
+        @Test
     @Tag("7")
     fun russian() {
         assertEquals("триста семьдесят пять", russian(375))

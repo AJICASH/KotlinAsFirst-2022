@@ -120,13 +120,14 @@ fun buildSumExample(list: List<Int>) = list.joinToString(separator = " + ", post
  * по формуле abs = sqrt(a1^2 + a2^2 + ... + aN^2).
  * Модуль пустого вектора считать равным 0.0.
  */
-fun abs(v: List<Double>): Double {
-    var res = 0.0
-    for (i in 0..v.size - 1){
-        res += v[i] * v[i]
-    }
-    return sqrt(res)
-}
+fun abs(v: List<Double>) = sqrt(v.map { it * it }.sum())
+// {
+//    var res = 0.0
+//    for (i in 0..v.size - 1){
+//        res += v[i] * v[i]
+//    }
+//    return sqrt(res)
+//}
 
 /**
  * Простая (2 балла)
@@ -134,12 +135,8 @@ fun abs(v: List<Double>): Double {
  * Рассчитать среднее арифметическое элементов списка list. Вернуть 0.0, если список пуст
  */
 fun mean(list: List<Double>): Double {
-    var res = 0.0
-    return if (list.size > 0){
-        for (i in 0..list.size - 1){
-            res += list[i]
-        }
-        res / list.size
+    return if (list.size > 0.0) {
+        list.sum() / list.size
     } else 0.0
 }
 
@@ -153,7 +150,7 @@ fun mean(list: List<Double>): Double {
  */
 fun center(list: MutableList<Double>): MutableList<Double> {
     var sr = mean(list)
-    for (i in 0..list.size - 1){
+    for (i in 0..list.size - 1) {
         list[i] -= sr
     }
     return list
@@ -166,17 +163,17 @@ fun center(list: MutableList<Double>): MutableList<Double> {
  * представленные в виде списков a и b. Скалярное произведение считать по формуле:
  * C = a1b1 + a2b2 + ... + aNbN. Произведение пустых векторов считать равным 0.
  */
-fun times(a: List<Int>, b: List<Int>): Int {
-    var c = 0
-    if (a.size == 0 || b.size == 0){
-        c = 0
-    } else {
-        for (i in 0..min(a.size - 1 , b.size - 1)){
-         c += a[i] * b[i]
-        }
-    }
-    return c
-}
+fun times(a: List<Int>, b: List<Int>): Int = a.mapIndexed { index, i -> i * b[index] }.sum()
+//    var c = 0
+//    if (a.size == 0 || b.size == 0){
+//        c = 0
+//    } else {
+//        for (i in 0..min(a.size - 1 , b.size - 1)){
+//         c += a[i] * b[i]
+//        }
+//    }
+//    return c
+//}
 
 /**
  * Средняя (3 балла)
@@ -186,13 +183,13 @@ fun times(a: List<Int>, b: List<Int>): Int {
  * Коэффициенты многочлена заданы списком p: (p0, p1, p2, p3, ..., pN).
  * Значение пустого многочлена равно 0 при любом x.
  */
-fun polynom(p: List<Int>, x: Int): Int {
-    var res = 0
-    for (i in 0..p.size - 1){
-        res += p[i] * x.toFloat().pow(i).toInt()
-    }
-    return res
-}
+fun polynom(p: List<Int>, x: Int): Int = p.mapIndexed { index, i -> i * x.toDouble().pow(index).toInt() }.sum()
+//    var res = 0
+//    for (i in 0..p.size - 1){
+//        res += p[i] * x.toFloat().pow(i).toInt()
+//    }
+//    return res
+//}
 
 /**
  * Средняя (3 балла)
@@ -205,8 +202,8 @@ fun polynom(p: List<Int>, x: Int): Int {
  * Обратите внимание, что данная функция должна изменять содержание списка list, а не его копии.
  */
 fun accumulate(list: MutableList<Int>): MutableList<Int> {
-    for (i in 1..list.size - 1){
-       list[i] += list[i - 1]
+    for (i in 1..list.size - 1) {
+        list[i] += list[i - 1]
     }
     return list
 }
@@ -222,8 +219,8 @@ fun factorize(n: Int): List<Int> {
     var n2 = n
     var i = 2
     val result = mutableListOf<Int>()
-    while (n2 > 1){
-        while (n2 % i == 0){
+    while (n2 > 1) {
+        while (n2 % i == 0) {
             result.add(i)
             n2 /= i
         }
@@ -250,9 +247,8 @@ fun factorizeToString(n: Int): String = factorize(n).joinToString(separator = "*
  */
 fun convert(n: Int, base: Int): List<Int> {
     var n2 = n
-    var n3 = n
     val list = mutableListOf<Int>()
-    while (n2 > 0){
+    while (n2 > 0) {
         list.add(n2 % base)
         n2 /= base
     }
@@ -271,27 +267,24 @@ fun convert(n: Int, base: Int): List<Int> {
  * (например, n.toString(base) и подобные), запрещается.
  */
 fun convertToString(n: Int, base: Int): String {
-    var n2 = n
-    var n3 = n
-    val list = mutableListOf<Int>()
-    while (n2 > 0){
-        list.add(n2 % base)
-        n2 /= base
-    }
-    list.reversed()
-    var count = 10
-    var string = ""
-    for (i in 0 until list.size){
-        if (list[i] >= 10){
-            for (j in 'a'..'z'){
-                if (list[i] == count){
-                    string += j
-                    count++
+    val list = convert(n, base) as MutableList<Int>
+    var result = ""
+
+    for (i in 0 until list.size) {
+        if (list[i] >= 10) {
+            var count = 9
+            for (j in 'a'..'z') {
+                count++
+                if (list[i] == count) {
+                    result += j
                 }
             }
-        } else string = list[i].toString() + string
+        } else {
+            result += list[i].toString()
+            println(result)
+        }
     }
-    return string
+    return result
 }
 
 
@@ -302,7 +295,8 @@ fun convertToString(n: Int, base: Int): String {
  * из системы счисления с основанием base в десятичную.
  * Например: digits = (1, 3, 12), base = 14 -> 250
  */
-fun decimal(digits: List<Int>, base: Int): Int = TODO()
+fun decimal(digits: List<Int>, base: Int): Int =
+    digits.reversed().mapIndexed { index, i -> i * base.toDouble().pow(index).toInt() }.sum()
 
 /**
  * Сложная (4 балла)
@@ -326,7 +320,19 @@ fun decimalFromString(str: String, base: Int): Int = TODO()
  * 90 = XC, 100 = C, 400 = CD, 500 = D, 900 = CM, 1000 = M.
  * Например: 23 = XXIII, 44 = XLIV, 100 = C
  */
-fun roman(n: Int): String = TODO()
+fun roman(n: Int): String {
+    var res = ""
+    val rom = listOf("M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I")
+    val arab = listOf(1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1)
+    var num = n
+    for (i in 0 until 13) {
+        while (num >= arab[i]) {
+            res += rom[i]
+            num -= arab[i]
+        }
+    }
+    return res
+}
 
 /**
  * Очень сложная (7 баллов)
@@ -335,4 +341,232 @@ fun roman(n: Int): String = TODO()
  * Например, 375 = "триста семьдесят пять",
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
-fun russian(n: Int): String = TODO()
+fun digitNumber(n: Int): Int {
+    var count = 0
+    var number = n
+    if (number == 0) return 1
+    while (number > 0) {
+        number /= 10
+        count++
+    }
+    return count
+}
+
+fun firsttrio(n: Int): String {
+    val one = listOf("", "одна", "две", "три", "четыре", "пять", "шесть", "семь", "восемь", "девять")
+    val ruina = listOf(
+        "одиннадцать",
+        "двенадцать",
+        "тринадцать",
+        "четырнадцать",
+        "пятнадцать",
+        "шестнадцать",
+        "семьнадцать",
+        "восемьнадцать",
+        "девятнадцать"
+    )
+    val dozens = listOf(
+        "",
+        "десять",
+        "двадцать",
+        "тридцать",
+        "сорок",
+        "пятьдесят",
+        "шестьдесят",
+        "семьдесят",
+        "восемьдесят",
+        "девяносто"
+    )
+    val hundreds =
+        listOf("", "сто", "двести", "триста", "четыреста", "пятьсот", "шестьсот", "семьсот", "восемьсот", "девятьсот")
+    var number = n
+    var numberthree = n
+    var res = ""
+    var i = 0
+    if (number % 100 < 20 && number % 100 > 10) {
+        res = ruina[(number % 10) - 1]
+        number /= 100
+        if (n < 100){
+             res += " тысяч"
+        }else{
+            res = hundreds[number] + " " + res + " тысяч"
+        }
+        println(res)
+        println("v pervom")
+
+    } else {
+        println(res)
+        while (number > 0) {
+            println(res)
+
+            i++
+            if (i % 3 == 1) {
+                if (number % 10 == 0) {
+                    res = one[(number % 10)] + res
+                } else {
+                    res = one[(number % 10)] + " " + res + when (number % 10) {
+                        1 -> "тысяча"
+                        2, 3, 4 -> "тысячи"
+                        0, 5, 6, 7, 8, 9 -> "тысяч"
+                        else -> ""
+                    }
+                }
+            } else if (i % 3 == 2) {
+                if (number % 10 == 0) {
+                    res = dozens[(number % 10)] + res
+                } else {
+                    if (n % 10 == 0) {
+                        res = dozens[(number % 10)] + " " + res + "тысяч"
+                    } else {
+                        res = dozens[(number % 10)] + " " + res
+                    }
+                }
+            } else if (i % 3 == 0) {
+                res = hundreds[(number % 10)] + " " + res
+            }
+            number /= 10
+        }
+        println(res)
+        println("v dva")
+    }
+    if (numberthree % 100 == 0) {
+        res += "тысяч"
+        println(res)
+        println("v tri")
+    }
+//    if (digitNumber(n) == 2) {
+//        res = res.substring(1)
+//    }
+    return res
+}
+
+fun secondtrio(n: Int): String {
+    val one = listOf("", "один", "два", "три", "четыре", "пять", "шесть", "семь", "восемь", "девять")
+    val ruina = listOf(
+        "одиннадцать",
+        "двенадцать",
+        "тринадцать",
+        "четырнадцать",
+        "пятнадцать",
+        "шестнадцать",
+        "семьнадцать",
+        "восемьнадцать",
+        "девятнадцать"
+    )
+    val dozens = listOf(
+        "",
+        "десять",
+        "двадцать",
+        "тридцать",
+        "сорок",
+        "пятьдесят",
+        "шестьдесят",
+        "семьдесят",
+        "восемьдесят",
+        "девяносто"
+    )
+    val hundreds =
+        listOf("", "сто", "двести", "триста", "четыреста", "пятьсот", "шестьсот", "семьсот", "восемьсот", "девятьсот")
+    var number = n
+    var numberthree = n
+    var res = ""
+    var i = 0
+    if (number % 100 < 20 && number % 100 > 10) {
+        res = ruina[(number % 10) - 1]
+        number /= 100
+        if (n < 100){
+            res += " "
+        } else{
+            res = hundreds[number] + " " + res + " "
+        }
+
+        println(res)
+        println("v pervom")
+
+    } else {
+        println(res)
+        while (number > 0) {
+            println(res)
+
+            i++
+            if (i % 3 == 1) {
+                if (number % 10 == 0) {
+                    res = one[(number % 10)] + res
+                } else {
+                    res = one[(number % 10)] + " " + res
+                }
+            } else if (i % 3 == 2) {
+                if (number % 10 == 0) {
+                    res = dozens[(number % 10)] + res
+                } else {
+                    res = dozens[(number % 10)] + " " + res
+                }
+            } else if (i % 3 == 0) {
+                res = hundreds[(number % 10)] + " " + res
+            }
+            number /= 10
+        }
+        println(res)
+        println("v dva")
+    }
+//    if (digitNumber(n) == 2) {
+//        res = res.substring(1)
+//    }
+    return res.dropLast(1)
+
+}
+
+fun russian(n: Int): String {
+    if (digitNumber(n) >= 4){
+        var second = n % 1000
+        var first = n / 1000
+        if (second == 0){
+            return firsttrio(first)
+        } else{
+            return firsttrio(first) + " " + secondtrio(second)
+        }
+
+    } else{
+        return secondtrio(n)
+    }
+//    val one = listOf("", "один", "два", "три", "четыре", "пять", "шесть", "семь", "восемь", "девять", "десять", "одиннадцать", "двенадцать", "тринадцать", "четырнадцать", "пятнадцать", "шестнадцать", "семьнадцать", "восемьнадцать", "девятнадцать")
+//    val dozens = listOf("", "десять", "двадцать", "тридцать", "сорок", "пятьдесят", "шестьдесят", "семьдесят", "восемьдесят", "девяносто")
+//    val hundreds = listOf("", "сто", "двести", "триста", "четыреста", "пятьсот", "шестьсот", "семьсот", "восемьсот", "девятьсот")
+//    val thousands = listOf("одна тысяча", "две тысячи", "три тысячи", "четыре тысячи", "пять тысяч", "шесть тысяч", "семь тысяч", "восемь тысяч", "девять тысяч")
+//    var number = n
+//    var res = ""
+//    var i = 0
+//    while (number > 0){
+//        i++
+//        if (i == 4){
+//            res = thousands[(number % 10) - 1] + " "  + res
+//        } else {
+//            if (i % 3 == 1){
+//                if (number % 10 == 0){
+//                    res = one[(number % 10)] + res
+//                }else{
+//                res = one[(number % 10)] + " "  + res
+//                }
+//            } else if (i % 3 == 2){
+//                if (number % 10 == 0){
+//                    res = dozens[(number % 10)] + res
+//                }else{
+//                    res = dozens[(number % 10)] + " "  + res
+//                }
+//            } else if (i % 3 == 0){
+//                if (number % 10 == 0){
+//                    res = hundreds[(number % 10)] + res
+//                }else{
+//                    res = hundreds[(number % 10)] + " "  + res
+//                }
+//            }
+//        }
+//        number /= 10
+//
+//    }
+//    return res.dropLast(1)
+
+
+    TODO()
+
+}

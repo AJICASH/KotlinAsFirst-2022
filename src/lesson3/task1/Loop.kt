@@ -79,9 +79,8 @@ fun digitNumber(n: Int): Int {
     var number = n
     if (number == 0) return 1
     while (number > 0) {
-        count++
         number /= 10
-
+        count++
     }
     return count
 }
@@ -107,7 +106,6 @@ fun fib(n: Int): Int {
     } else {
         fibres
     }
-    return 0
 }
 
 
@@ -258,7 +256,7 @@ fun isCoPrime(m: Int, n: Int): Boolean {
 fun revert(n: Int): Int {
     var n1 = n
     var res = 0
-    var cifra = 0
+    var digit = 0
 //    while (n1 > 0){
 //        n1 = n1 / 10
 //        count++
@@ -272,8 +270,8 @@ fun revert(n: Int): Int {
 //    }
 //    return res
     while (n1 > 0){
-        cifra = n1 % 10
-        res = res * 10 + cifra
+        digit = n1 % 10
+        res = res * 10 + digit
         n1 /= 10
     }
     return res
@@ -410,11 +408,7 @@ fun squareSequenceDigit(n: Int): Int {
     var result = 0
     for (i in 1..n){
         numbersqr = i * i
-        nomer = 0
-        while (numbersqr != 0){
-            nomer++
-            numbersqr /= 10
-        }
+        nomer = digitNumber(numbersqr)
         res += nomer
         if (n <= res) {
             minus = res - n
@@ -472,10 +466,7 @@ fun fibSequenceDigit(n: Int): Int {
     for (i in 1..n){
         numbersqr = fib(i)
         nomer = 0
-        while (numbersqr != 0){
-            nomer++
-            numbersqr /= 10
-        }
+        nomer = digitNumber(numbersqr)
         res += nomer
         if (n <= res) {
             minus = res - n
