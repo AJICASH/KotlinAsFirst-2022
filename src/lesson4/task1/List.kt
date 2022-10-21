@@ -252,7 +252,7 @@ fun convert(n: Int, base: Int): List<Int> {
         list.add(n2 % base)
         n2 /= base
     }
-    return list.reversed()
+    return list!!.reversed()
 }
 
 /**
@@ -280,7 +280,7 @@ fun convertToString(n: Int, base: Int): String {
                 }
             }
         } else {
-            result += list[i].toString()
+            result += list[i]!!.toString()
             println(result)
         }
     }
