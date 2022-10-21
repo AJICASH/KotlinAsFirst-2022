@@ -248,7 +248,7 @@ fun factorizeToString(n: Int): String = factorize(n).joinToString(separator = "*
 fun convert(n: Int, base: Int): List<Int> {
     var n2 = n
     val list = mutableListOf<Int>()
-    while (n2 > 0) {
+    while (n2 >= 0) {
         list.add(n2 % base)
         n2 /= base
     }
@@ -343,7 +343,7 @@ fun roman(n: Int): String {
  */
 fun digitNumber(n: Int): Int {
     var count = 0
-    var number = n
+    var number = abs(n)
     if (number == 0) return 1
     while (number > 0) {
         number /= 10

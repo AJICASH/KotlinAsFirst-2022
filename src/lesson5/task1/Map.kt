@@ -85,7 +85,18 @@ fun buildWordSet(text: List<String>): MutableSet<String> {
     return res
 }
 
-
+//fun binarysearch(list: List<Int>, el: Int):Boolean{
+//    list.sorted()
+//    var center = 0
+//    while (list[center] != el){
+//        center = list.size / 2
+//        if (el < list[center]){
+//            list.subList(0, center)
+//        } else {
+//            list.subList(center, list.size - 1)
+//        }
+//    }
+//}
 /**
  * Простая (2 балла)
  *
