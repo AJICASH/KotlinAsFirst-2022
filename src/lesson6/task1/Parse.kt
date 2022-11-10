@@ -74,7 +74,28 @@ fun main() {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30.02.2009) считается неверными
  * входными данными.
  */
-fun dateStrToDigit(str: String): String = TODO()
+fun dateStrToDigit(str: String): String {
+    val month = listOf("", "января","февраля","марта","апреля","мая","июня","июля","августа","сентября","октября","ноября","декабря")
+    var list = str.split(" ")
+    var res = ""
+    var checkyear = false
+    println(list)
+    println(list.size)
+    if (list.size == 3){
+        if (list[2].toInt() % 4 == 0 && list[2].toInt() % 100 != 0 || list[2].toInt() % 400 == 0) {
+                checkyear = true
+        }
+    } else{
+        res = ""
+    }
+    if ((list.size != 3) || (month.indexOf(list[1]) == -1) || (checkyear == false && list[0].toInt() > 28 && month.indexOf(list[1]) == 2) || list[0].toInt() > 31 || list[0].toInt() < 1){
+        res = ""
+    }else {
+        res = String.format("%02d.%02d.%d", list[0].toInt(),month.indexOf(list[1]),list[2].toInt())
+    }
+    println(res)
+    return res
+}
 
 /**
  * Средняя (4 балла)
@@ -86,7 +107,31 @@ fun dateStrToDigit(str: String): String = TODO()
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30 февраля 2009) считается неверными
  * входными данными.
  */
-fun dateDigitToStr(digital: String): String = TODO()
+fun dateDigitToStr(digital: String): String {
+    val month = listOf("", "января","февраля","марта","апреля","мая","июня","июля","августа","сентября","октября","ноября","декабря")
+    if (!(digital matches Regex("""\d\d\.\d\d\.\d+"""))){
+        return ""
+    }
+    var list = digital.split(".")
+//    println("07".toInt())
+    var res = ""
+    var checkyear = false
+    if (list.size == 3){
+        if (list[2].toInt() % 4 == 0 && list[2].toInt() % 100 != 0 || list[2].toInt() % 400 == 0) {
+            checkyear = true
+        }
+    } else{
+        res = ""
+    }
+    if ((list.size != 3) || list[1].toInt() > 12 || list[1].toInt() < 1 || (checkyear == false && list[0].toInt() > 28 && list[1].toInt() == 2) || list[0].toInt() > 31 || list[0].toInt() < 1 ){
+        res = ""
+    }else {
+        res = String.format("%d ${month[list[1].toInt()]} %d", list[0].toInt(),list[2].toInt())
+    }
+    println(res)
+    return res
+
+}
 
 /**
  * Средняя (4 балла)
@@ -102,7 +147,19 @@ fun dateDigitToStr(digital: String): String = TODO()
  *
  * PS: Дополнительные примеры работы функции можно посмотреть в соответствующих тестах.
  */
-fun flattenPhoneNumber(phone: String): String = TODO()
+fun flattenPhoneNumber(phone: String): String {
+    var mask = """(\+\d+)?\s*(\(?[\s\-\d]+\)?)?[\s\-\d]*""".toRegex()
+    var result = ""
+    if (phone matches mask){
+        for (ch in 0..phone.length - 1){
+            println(phone[ch])
+            if (phone[ch].toString() == "+" || phone[ch].toString() matches Regex("""\d""")){
+                result += phone[ch]
+            }
+        }
+    } else return ""
+    return result
+}
 
 /**
  * Средняя (5 баллов)
@@ -114,7 +171,23 @@ fun flattenPhoneNumber(phone: String): String = TODO()
  * Прочитать строку и вернуть максимальное присутствующее в ней число (717 в примере).
  * При нарушении формата входной строки или при отсутствии в ней чисел, вернуть -1.
  */
-fun bestLongJump(jumps: String): Int = TODO()
+fun bestLongJump(jumps: String): Int {
+    var list = jumps.split(" ")
+    println(list)
+    var reslist = mutableListOf<Int>()
+    for (i in 0 until list.size){
+        if (list[i] matches Regex("""\d+""") || list[i] matches Regex("""\%""") || list[i] matches Regex("""\-""")){
+            if (list[i] matches Regex("""\d+""")){
+                reslist += list[i].toInt()
+            }
+        }else return -1
+    }
+    println(reslist)
+    return if (reslist.size == 0){
+        -1
+    }else reslist.max()
+
+}
 
 /**
  * Сложная (6 баллов)

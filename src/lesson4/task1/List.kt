@@ -4,6 +4,7 @@ package lesson4.task1
 
 import lesson1.task1.discriminant
 import kotlin.math.*
+import lesson3.task1.digitNumber
 
 // Урок 4: списки
 // Максимальное количество баллов = 12
@@ -248,11 +249,16 @@ fun factorizeToString(n: Int): String = factorize(n).joinToString(separator = "*
 fun convert(n: Int, base: Int): List<Int> {
     var n2 = n
     val list = mutableListOf<Int>()
-    while (n2 >= 0) {
-        list.add(n2 % base)
-        n2 /= base
+    if (n == 0){
+        list.add(0)
+    } else {
+        while (n2 > 0) {
+            list.add(n2 % base)
+            n2 /= base
+        }
     }
-    return list!!.reversed()
+
+    return list.reversed()
 }
 
 /**
@@ -269,19 +275,22 @@ fun convert(n: Int, base: Int): List<Int> {
 fun convertToString(n: Int, base: Int): String {
     val list = convert(n, base) as MutableList<Int>
     var result = ""
-
-    for (i in 0 until list.size) {
-        if (list[i] >= 10) {
-            var count = 9
-            for (j in 'a'..'z') {
-                count++
-                if (list[i] == count) {
-                    result += j
+    if (n == 0) {
+        result = "0"
+    } else {
+        for (i in 0 until list.size) {
+            if (list[i] >= 10) {
+                var count = 9
+                for (j in 'a'..'z') {
+                    count++
+                    if (list[i] == count) {
+                        result += j
+                    }
                 }
+            } else {
+                result += list[i].toString()
+                println(result)
             }
-        } else {
-            result += list[i]!!.toString()
-            println(result)
         }
     }
     return result
@@ -341,16 +350,7 @@ fun roman(n: Int): String {
  * Например, 375 = "триста семьдесят пять",
  * 23964 = "двадцать три тысячи девятьсот шестьдесят четыре"
  */
-fun digitNumber(n: Int): Int {
-    var count = 0
-    var number = abs(n)
-    if (number == 0) return 1
-    while (number > 0) {
-        number /= 10
-        count++
-    }
-    return count
-}
+
 
 fun firsttrio(n: Int): String {
     val one = listOf("", "одна", "две", "три", "четыре", "пять", "шесть", "семь", "восемь", "девять")
@@ -468,7 +468,6 @@ fun secondtrio(n: Int): String {
     val hundreds =
         listOf("", "сто", "двести", "триста", "четыреста", "пятьсот", "шестьсот", "семьсот", "восемьсот", "девятьсот")
     var number = n
-    var numberthree = n
     var res = ""
     var i = 0
     if (number % 100 < 20 && number % 100 > 10) {
