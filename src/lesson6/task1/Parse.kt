@@ -302,7 +302,7 @@ fun mostExpensive(description: String): String {
     var list = str.split(" ")
     var reslist = mutableMapOf<String, Double>()
     var res = ""
-    var maxi = 0
+    var maxi = -1
     println(list)
     if (str.isEmpty()){
         return ""
