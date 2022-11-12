@@ -2,6 +2,8 @@
 
 package lesson6.task1
 
+import ru.spbstu.wheels.NullableMonad.filter
+
 // Урок 6: разбор строк, исключения
 // Максимальное количество баллов = 13
 // Рекомендуемое количество баллов = 11
@@ -200,7 +202,35 @@ fun bestLongJump(jumps: String): Int {
  * При нарушении формата входной строки, а также в случае отсутствия удачных попыток,
  * вернуть -1.
  */
-fun bestHighJump(jumps: String): Int = TODO()
+fun bestHighJump(jumps: String): Int {
+//    var list = jumps.split(" ")
+//    var reslist = mutableListOf<Pair<Int, String>>()
+//    var result = mutableListOf<Int>()
+//    for (i in list.indices){
+//        if (i % 2 == 0){
+//            reslist[i].first == list[i].toInt()
+//        } else{
+//            reslist[i].second == list[i]
+//        }
+//        println(reslist[i])
+//    }
+//    for (i in 0 until list.size){
+//        if (list[i] matches Regex("""\d+""") || list[i] matches Regex("""\%""") || list[i] matches Regex("""\-""")){
+//            for ((key, value) in reslist){
+//                if (value == "+"){
+//                    result += key
+//                }
+//            }
+//        }else return -1
+//    }
+//
+//    println(reslist)
+//    println(result)
+//    return if (result.size == 0){
+//        -1
+//    }else result.max()
+    TODO()
+}
 
 /**
  * Сложная (6 баллов)
@@ -211,7 +241,25 @@ fun bestHighJump(jumps: String): Int = TODO()
  * Вернуть значение выражения (6 для примера).
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
-fun plusMinus(expression: String): Int = TODO()
+fun plusMinus(expression: String): Int {
+    var str = expression.replace(Regex("""\s+"""), " " )
+    var res = 0
+    if (!(str matches Regex("""\d+(\s[+-]\s\d+)*"""))){
+        throw IllegalArgumentException()
+    } else{
+        var list = str.split(" ")
+        res = list[0].toInt()
+        for (i in 0 until list.size){
+            if (list[i] == "+"){
+                res += list[i + 1].toInt()
+            } else if (list[i] == "-"){
+                res -= list[i + 1].toInt()
+            }
+        }
+    }
+    println(res)
+    return res
+}
 
 /**
  * Сложная (6 баллов)
@@ -222,7 +270,21 @@ fun plusMinus(expression: String): Int = TODO()
  * Вернуть индекс начала первого повторяющегося слова, или -1, если повторов нет.
  * Пример: "Он пошёл в в школу" => результат 9 (индекс первого 'в')
  */
-fun firstDuplicateIndex(str: String): Int = TODO()
+fun firstDuplicateIndex(str: String): Int {
+    //"Яблоко упало на ветку с ветки оно упало на на землю"
+    var list = str.toLowerCase().split(" ")
+    var length = list[0].length
+    for (i in 1 until list.size){
+//        println(list[i])
+//        println(length)
+        length += 1 + list[i].length
+//        println(length)
+        if (list[i] == list[i - 1]){
+            return length - 1 - 2 * list[i - 1].length
+        }
+    }
+    return -1
+}
 
 /**
  * Сложная (6 баллов)
@@ -235,7 +297,38 @@ fun firstDuplicateIndex(str: String): Int = TODO()
  * или пустую строку при нарушении формата строки.
  * Все цены должны быть больше нуля либо равны нулю.
  */
-fun mostExpensive(description: String): String = TODO()
+fun mostExpensive(description: String): String {
+    var str = description.replace("; ", " " )
+    var list = str.split(" ")
+    var reslist = mutableMapOf<String, Double>()
+    var res = ""
+    var maxi = 0
+    println(list)
+    if (str.isEmpty()){
+        return ""
+    } else{
+        for (i in 0 until list.size step 2){
+            reslist += (Pair(list[i],list[i + 1].toDouble()))
+        }
+    }
+    println(reslist)
+    for ((key,value) in reslist){
+        if (value > maxi){
+            maxi = value.toInt()
+            res = key
+        }
+
+    }
+    return res
+//        if (list.isEmpty()){
+//            return ""
+//        } else {
+//            if (i % 2 == 1){
+//                reslist += list[i].toInt()
+//            }
+//        }
+//    }
+}
 
 /**
  * Сложная (6 баллов)
@@ -248,7 +341,11 @@ fun mostExpensive(description: String): String = TODO()
  *
  * Вернуть -1, если roman не является корректным римским числом
  */
-fun fromRoman(roman: String): Int = TODO()
+fun fromRoman(roman: String): Int {
+//    val rom = listOf("M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I")
+//    val arab = listOf(1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1)
+    TODO()
+}
 
 /**
  * Очень сложная (7 баллов)
