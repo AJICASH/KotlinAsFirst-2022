@@ -3,6 +3,7 @@
 
 package lesson1.task1
 
+import java.lang.IllegalArgumentException
 import kotlin.math.*
 
 // Урок 1: простые функции
@@ -148,4 +149,49 @@ fun numberRevert(number: Int): Int {
     return c * 100 + b * 10 + a
 }
 
-
+//fun myFun(table: Map<String,Int>,taxes : String): Collection<Any>{
+//    if (!(taxes matches Regex("""(([А-я\s]*[А-я]+\s)\-\s([А-я]+\s[А-я]*)\s\-\s\d+"""))){
+//        throw IllegalArgumentException()
+//    }
+//    val taxeslist = taxes.split(Regex("""\n"""))
+//    for (i in 0 until taxeslist.size){
+//        val list = taxeslist[i].split(" - ")
+//        val result = mutableListOf<Pair<String, Int>>()
+//        for ((key,value) in table){
+//
+//        }
+//    }
+//}
+fun myfun(taxes: String, money: Int): Any {
+//    val str = taxes.split("y.e. - ")
+    var result = 0
+    var count = money
+    var previous = 0
+    if (Regex("""(\d+\sy.e. - \d+%; )+else - \d+%""").matches(taxes)){
+        var lastpercent = taxes.takeLast(3)
+        lastpercent = lastpercent.replace("%","")
+        for (i in taxes.split("; ")){
+            var str = i.replace("%","")
+            val (sum, percent) = str.split(" y.e. - ")
+            if (count > 0){
+                if (sum == "else"){
+                    result += (money - previous) * (lastpercent.toInt() / 100)
+                } else {
+//                    println(sum)
+//                    println(percent)
+//                    println(result)
+//                    println(previous)
+                    println(sum.toInt())
+                    println(percent.toInt())
+                    println(sum.toInt() * (percent.toInt() / 100))
+                    result += sum.toInt() * (percent.toInt() / 100)
+                    count -= (sum.toInt() - previous)
+                    previous = sum.toInt()
+                }
+            }
+        }
+    } else {
+        throw IllegalArgumentException("")
+    }
+    return result
+}

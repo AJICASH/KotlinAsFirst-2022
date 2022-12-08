@@ -2,7 +2,9 @@
 
 package lesson7.task1
 
+import lesson3.task1.digitNumber
 import java.io.File
+import kotlin.math.*
 
 // Урок 7: работа с файлами
 // Урок интегральный, поэтому его задачи имеют сильно увеличенную стоимость
@@ -63,7 +65,16 @@ fun alignFile(inputName: String, lineLength: Int, outputName: String) {
  * Подчёркивание в середине и/или в конце строк значения не имеет.
  */
 fun deleteMarked(inputName: String, outputName: String) {
-    TODO()
+    val str = File(outputName).bufferedWriter()
+    for (i in File(inputName).readLines()){
+        if (i.isEmpty()){
+            str.newLine()
+        } else if (i[0] != '_'){
+            str.write(i)
+            str.newLine()
+        }
+    }
+    str.close()
 }
 
 /**
@@ -75,7 +86,38 @@ fun deleteMarked(inputName: String, outputName: String) {
  * Регистр букв игнорировать, то есть буквы е и Е считать одинаковыми.
  *
  */
-fun countSubstrings(inputName: String, substrings: List<String>): Map<String, Int> = TODO()
+fun countSubstrings(inputName: String, substrings: List<String>): Map<String, Int> {
+    val res = mutableMapOf<String, Int>()
+    var str = File(inputName).readLines().joinToString().lowercase()
+    for (line in substrings){
+        var count = 0
+        var leng = line.length
+        for (i in str.indices){
+            if ((i <= str.length - leng) && (line.lowercase() == str.substring(i, leng + i))){
+                count += 1
+            }
+        }
+        res[line] = count
+    }
+    return res
+}
+//    for (i in 0 to inputName.length){
+//
+//    }
+//    for (i in 0 until substrings.){
+//
+//    }
+//    for (i in substrings){
+//        var count = 0
+//        for (str in File(inputName).readLines()){
+//            if (i.lowercase() in str.lowercase()){
+//                count += Regex(i.lowercase()).findAll(str.lowercase()).count()
+//            }
+//        }
+//        res[i] = count
+//    }
+//    return res
+
 
 
 /**
@@ -92,6 +134,7 @@ fun countSubstrings(inputName: String, substrings: List<String>): Map<String, In
  *
  */
 fun sibilants(inputName: String, outputName: String) {
+//    val letters = mapOf('Ы' to 'И', 'Я' to 'А', 'Ю' to 'У', 'ы' to 'и', 'я' to 'а', 'ы' to 'у')
     TODO()
 }
 
@@ -113,7 +156,21 @@ fun sibilants(inputName: String, outputName: String) {
  *
  */
 fun centerFile(inputName: String, outputName: String) {
-    TODO()
+    val result = File(outputName).bufferedWriter()
+    result.use{
+        var maxline = -1
+        for (line in File(inputName).readLines()){
+            maxline = max(maxline,line.length)
+        }
+        for (line in File(inputName).readLines()){
+            var razn = maxline - line.trim().length
+            for (j in 0 until razn / 2){
+                result.write(" ")
+            }
+            result.write(line.trim())
+            result.newLine()
+        }
+    }
 }
 
 /**
@@ -449,6 +506,126 @@ fun printMultiplicationProcess(lhv: Int, rhv: Int, outputName: String) {
  *
  */
 fun printDivisionProcess(lhv: Int, rhv: Int, outputName: String) {
-    TODO()
+//    val result = File(outputName).bufferedWriter()
+//    var divisible = lhv
+//    var minus = 0
+//    var spacenumber = 0
+//    var spacenumber2 = 0
+//    var tire = 0
+//    var flag = true
+//    var c = 0
+//    var num = 0
+//    result.write(" ")
+//    result.write(lhv.toString())
+//    result.write(" | ")
+//    result.write(rhv.toString())
+//    result.newLine()
+//    while(flag != false){
+//        c += 1
+//        if (divisible.toString().substring(0, c).toInt() > rhv){
+//            minus = (divisible.toString().substring(0, c).toInt() / rhv) * rhv
+//            result.write("-")
+//            result.write(minus.toString())
+//            spacenumber = digitNumber(lhv) - digitNumber(divisible.toString().substring(0, c).toInt())
+//            while (spacenumber != 0){
+//                result.write(" ")
+//                spacenumber -= 1
+//            }
+//            result.write("   ")
+//            result.write((lhv / rhv).toString())
+//            result.newLine()
+//            tire = digitNumber(divisible.toString().substring(0, c).toInt()) + 1
+//            divisible = ((divisible.toString().substring(0, c).toInt() - minus).toString()).toInt()
+//            spacenumber = digitNumber(minus)
+//            spacenumber2 = spacenumber
+//            flag = false
+//        }
+//    }
+//    while (c <= digitNumber(lhv)){
+//        while (tire != 0){
+//            result.write("-")
+//            tire -= 1
+//        }
+//        if ((divisible.toString() + lhv.toString()[c].toString()).toInt() >= rhv){
+//            result.newLine()
+//            if (divisible == 0){
+//                spacenumber += 1
+//                while (spacenumber != 0){
+//                    result.write(" ")
+//                    spacenumber -= 1
+//                }
+//                result.write(lhv.toString()[c].toString())
+//                if (divisible == 0){
+//                    spacenumber2 += 1
+//                    while (spacenumber2 != 0){
+//                        result.write(" ")
+//                        spacenumber2 -= 1
+//                    }
+//                } else {
+//                    while (spacenumber2 != 0){
+//                        result.write(" ")
+//                        spacenumber2 -= 1
+//                    }
+//                }
+//                result.write("-")
+//                result.write((lhv.toString()[c].toString().toInt() / rhv) * rhv)
+//                divisible = (lhv.toString()[c].toString()).toInt() - (lhv.toString()[c].toString().toInt() / rhv) * rhv
+//
+//            } else {
+//                while (spacenumber != 0){
+//                    result.write(" ")
+//                    spacenumber -= 1
+//                }
+//                result.write(divisible.toString() + lhv.toString()[c].toString())
+//                if (divisible == 0){
+//                    spacenumber2 += 1
+//                    while (spacenumber2 != 0){
+//                        result.write(" ")
+//                        spacenumber2 -= 1
+//                    }
+//                } else {
+//                    while (spacenumber2 != 0){
+//                        result.write(" ")
+//                        spacenumber2 -= 1
+//                    }
+//                }
+//                result.write("-")
+//                result.write((divisible.toString() + lhv.toString()[c].toString().toInt() / rhv) * rhv)
+//                divisible = (divisible.toString() + lhv.toString()[c].toString()).toInt() - (divisible.toString() + lhv.toString()[c].toString().toInt() / rhv) * rhv
+//            }
+//        } else {
+//            result.newLine()
+//            if (divisible == 0){
+//                spacenumber += 1
+//                while (spacenumber != 0){
+//                    result.write(" ")
+//                    spacenumber -= 1
+//                }
+//            } else {
+//                while (spacenumber != 0){
+//                    result.write(" ")
+//                    spacenumber -= 1
+//                }
+//                result.write(divisible.toString() + lhv.toString()[c].toString())
+//            }
+//        }
+//        c += 1
+//    }
+//
+//
+//
+
+//    while (num != digitNumber(lhv)){
+//        for (i in 0 until digitNumber(lhv)){
+//            if (divisible.toString().substring(0, i).toInt() > rhv){
+//                minus = divisible.toString().substring(0, i).toInt() / rhv
+//                result.write("-")
+//                result.write(minus.toString())
+//
+//            }
+//        }
+//        num += 1
+//    }
+//    result.close()
 }
 

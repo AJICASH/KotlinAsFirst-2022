@@ -105,4 +105,9 @@ class Tests {
         assertEquals(874, numberRevert(478))
         assertEquals(201, numberRevert(102))
     }
+    @Test
+    @Tag("10000")
+    fun myfun() {
+        assertEquals(13000, myfun("20000 y.e. - 0%; 40000 y.e. - 5%; 60000 y.e. - 10%; else - 25%", 100000))
+    }
 }

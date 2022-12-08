@@ -1,8 +1,7 @@
 @file:Suppress("UNUSED_PARAMETER", "ConvertCallChainIntoSequence")
 
 package lesson6.task1
-
-import ru.spbstu.wheels.NullableMonad.filter
+import lesson2.task2.daysInMonth
 
 // Урок 6: разбор строк, исключения
 // Максимальное количество баллов = 13
@@ -77,21 +76,26 @@ fun main() {
  * входными данными.
  */
 fun dateStrToDigit(str: String): String {
-    val month = listOf("", "января","февраля","марта","апреля","мая","июня","июля","августа","сентября","октября","ноября","декабря")
+    val month = listOf("", "января","февраля","марта","апреля","мая","июня","июля","августа","сентября","октября",
+        "ноября","декабря")
     var list = str.split(" ")
     var res = ""
-    var checkyear = false
     println(list)
     println(list.size)
-    if (list.size == 3){
-        if (list[2].toInt() % 4 == 0 && list[2].toInt() % 100 != 0 || list[2].toInt() % 400 == 0) {
-                checkyear = true
-        }
-    } else{
+//    if (list.size == 3){
+//        if (list[2].toInt() % 4 == 0 && list[2].toInt() % 100 != 0 || list[2].toInt() % 400 == 0) {
+//                checkyear = true
+//        }
+//    } else{
+//        res = ""
+//    }
+    if (list.size != 3) return ""
+    if ((month.indexOf(list[1]) == -1) ||
+        (daysInMonth(month.indexOf(list[1]), list[2].toInt()) < list[0].toInt()) ||
+        list[0].toInt() > 31 || list[0].toInt() < 1){
         res = ""
-    }
-    if ((list.size != 3) || (month.indexOf(list[1]) == -1) || (checkyear == false && list[0].toInt() > 28 && month.indexOf(list[1]) == 2) || list[0].toInt() > 31 || list[0].toInt() < 1){
-        res = ""
+//        checkyear == false && list[0].toInt() > 28
+//                && month.indexOf(list[1]) == 2) || list[0].toInt() > 31 || list[0].toInt() < 1){
     }else {
         res = String.format("%02d.%02d.%d", list[0].toInt(),month.indexOf(list[1]),list[2].toInt())
     }
@@ -110,22 +114,23 @@ fun dateStrToDigit(str: String): String {
  * входными данными.
  */
 fun dateDigitToStr(digital: String): String {
-    val month = listOf("", "января","февраля","марта","апреля","мая","июня","июля","августа","сентября","октября","ноября","декабря")
-    if (!(digital matches Regex("""\d\d\.\d\d\.\d+"""))){
-        return ""
-    }
+    val month = listOf("", "января","февраля","марта","апреля","мая","июня","июля","августа","сентября","октября",
+        "ноября","декабря")
+    if (!(digital matches Regex("""\d\d\.\d\d\.\d+"""))) return ""
     var list = digital.split(".")
 //    println("07".toInt())
     var res = ""
-    var checkyear = false
-    if (list.size == 3){
-        if (list[2].toInt() % 4 == 0 && list[2].toInt() % 100 != 0 || list[2].toInt() % 400 == 0) {
-            checkyear = true
-        }
-    } else{
-        res = ""
-    }
-    if ((list.size != 3) || list[1].toInt() > 12 || list[1].toInt() < 1 || (checkyear == false && list[0].toInt() > 28 && list[1].toInt() == 2) || list[0].toInt() > 31 || list[0].toInt() < 1 ){
+//    if (list.size == 3){
+//        if (list[2].toInt() % 4 == 0 && list[2].toInt() % 100 != 0 || list[2].toInt() % 400 == 0) {
+//            checkyear = true
+//        }
+//    } else{
+//        res = ""
+//    }
+    if (list.size != 3) return ""
+    if (list[1].toInt() > 12 || list[1].toInt() < 1 ||
+        (daysInMonth(list[1].toInt(), list[2].toInt()) < list[0].toInt()) ||
+        list[0].toInt() > 31 || list[0].toInt() < 1) {
         res = ""
     }else {
         res = String.format("%d ${month[list[1].toInt()]} %d", list[0].toInt(),list[2].toInt())
@@ -152,14 +157,13 @@ fun dateDigitToStr(digital: String): String {
 fun flattenPhoneNumber(phone: String): String {
     var mask = """(\+\d+)?\s*(\(?[\s\-\d]+\)?)?[\s\-\d]*""".toRegex()
     var result = ""
-    if (phone matches mask){
-        for (ch in 0..phone.length - 1){
-            println(phone[ch])
-            if (phone[ch].toString() == "+" || phone[ch].toString() matches Regex("""\d""")){
-                result += phone[ch]
-            }
+    if (!phone.matches(mask)) return ""
+    for (ch in 0..phone.length - 1){
+        println(phone[ch])
+        if (phone[ch].toString() == "+" || phone[ch].toString() matches Regex("""\d""")){
+            result += phone[ch]
         }
-    } else return ""
+    }
     return result
 }
 
@@ -244,17 +248,14 @@ fun bestHighJump(jumps: String): Int {
 fun plusMinus(expression: String): Int {
     var str = expression.replace(Regex("""\s+"""), " " )
     var res = 0
-    if (!(str matches Regex("""\d+(\s[+-]\s\d+)*"""))){
-        throw IllegalArgumentException()
-    } else{
-        var list = str.split(" ")
-        res = list[0].toInt()
-        for (i in 0 until list.size){
-            if (list[i] == "+"){
-                res += list[i + 1].toInt()
-            } else if (list[i] == "-"){
-                res -= list[i + 1].toInt()
-            }
+    if (!(str matches Regex("""\d+(\s[+-]\s\d+)*""")))throw IllegalArgumentException()
+    var list = str.split(" ")
+    res = list[0].toInt()
+    for (i in 0 until list.size){
+        if (list[i] == "+"){
+            res += list[i + 1].toInt()
+        } else if (list[i] == "-"){
+            res -= list[i + 1].toInt()
         }
     }
     println(res)
@@ -280,7 +281,7 @@ fun firstDuplicateIndex(str: String): Int {
         length += 1 + list[i].length
 //        println(length)
         if (list[i] == list[i - 1]){
-            return length - 1 - 2 * list[i - 1].length
+            return (length - 1) - 2 * list[i - 1].length
         }
     }
     return -1
