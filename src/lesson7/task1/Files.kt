@@ -160,7 +160,7 @@ fun centerFile(inputName: String, outputName: String) {
     result.use{
         var maxline = -1
         for (line in File(inputName).readLines()){
-            maxline = max(maxline,line.length)
+            maxline = max(maxline,line.trim().length)
         }
         for (line in File(inputName).readLines()){
             var razn = maxline - line.trim().length
