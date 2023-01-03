@@ -180,7 +180,7 @@ fun triangleKind(a: Double, b: Double, c: Double): Int {
     val mini = min(min(a,b),c)
     val midi = a + b + c - maxi - mini
 
-    if (maxi < mini + midi) {
+    if ((c < a + b) && (b < a + c) && (a < b + c)) {
         return when {
             maxi * maxi < mini * mini + midi * midi -> 0
             maxi * maxi == mini * mini + midi * midi -> 1

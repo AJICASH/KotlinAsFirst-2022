@@ -275,24 +275,26 @@ fun convert(n: Int, base: Int): List<Int> {
 fun convertToString(n: Int, base: Int): String {
     val list = convert(n, base) as MutableList<Int>
     var result = ""
-    if (n == 0) return "0"
-    for (i in 0 until list.size) {
-        if (list[i] >= 10) {
-            result += 'a' + (list[i] - 10)
-//            for (j in 'a'..'z') {
-//                count++
-//                if (list[i] == count) {
-//                    result += j
-//                }
-//            }
-        } else {
-            result += list[i].toString()
-            println(result)
+    if (n == 0) {
+        result = "0"
+    } else {
+        for (i in 0 until list.size) {
+            if (list[i] >= 10) {
+                var count = 9
+                for (j in 'a'..'z') {
+                    count++
+                    if (list[i] == count) {
+                        result += j
+                    }
+                }
+            } else {
+                result += list[i].toString()
+                println(result)
+            }
         }
     }
     return result
 }
-
 
 
 /**
@@ -332,7 +334,7 @@ fun roman(n: Int): String {
     val rom = listOf("M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I")
     val arab = listOf(1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1)
     var num = n
-    for (i in rom.indices) {
+    for (i in 0 until 13) {
         while (num >= arab[i]) {
             res += rom[i]
             num -= arab[i]

@@ -76,10 +76,11 @@ fun seconds(hours: Int, minutes: Int, seconds: Int): Int = hours * 60 * 60 + min
  * 1 сажень = 3 аршина = 48 вершков, 1 вершок = 4.445 см.
  */
 fun lengthInMeters(sagenes: Int, arshins: Int, vershoks: Int): Double {
-    val sagen = sagenes * 48 * 4.445
-    val arsh = arshins * 16 * 4.445
-    val versh = vershoks * 4.445
-    return (sagen + arsh + versh) / 100
+    val a = sagenes * 48 * 4.445
+    val b = arshins * 16 * 4.445
+    val c = vershoks * 4.445
+    return (a+b+c)/100
+
 }
 
 /**
@@ -88,8 +89,11 @@ fun lengthInMeters(sagenes: Int, arshins: Int, vershoks: Int): Double {
  * Пользователь задает угол в градусах, минутах и секундах (например, 36 градусов 14 минут 35 секунд).
  * Вывести значение того же угла в радианах (например, 0.63256).
  */
-fun angleInRadian(deg: Int, min: Int, sec: Int): Double = (deg + min / 60.0 + sec / 3600.0) / 180.0 * PI
+fun angleInRadian(deg: Int, min: Int, sec: Int): Double {
+    val sum = deg * 60 * 60 + min * 60 + sec
+    return sum / 206265.0
 
+}
 
 
 
@@ -99,7 +103,7 @@ fun angleInRadian(deg: Int, min: Int, sec: Int): Double = (deg + min / 60.0 + se
  * Найти длину отрезка, соединяющего точки на плоскости с координатами (x1, y1) и (x2, y2).
  * Например, расстояние между (3, 0) и (0, 4) равно 5
  */
-fun trackLength(x1: Double, y1: Double, x2: Double, y2: Double): Double = sqrt(sqr(x2 - x1) + sqr(y2 - y1))
+fun trackLength(x1: Double, y1: Double, x2: Double, y2: Double): Double = sqrt(sqr(x2-x1)+ sqr(y2-y1))
 
 
 /**
@@ -108,9 +112,11 @@ fun trackLength(x1: Double, y1: Double, x2: Double, y2: Double): Double = sqrt(s
  * Пользователь задает целое число, больше или равно 100 (например, 3801).
  * Определить третью цифру справа в этом числе (в данном случае 8).
  */
-fun thirdDigit(number: Int): Int = number % 1000 / 100
+fun thirdDigit(number: Int): Int {
+    val a = number % 1000
+    return a / 100
 
-
+}
 
 
 /**
@@ -132,7 +138,7 @@ fun travelMinutes(hoursDepart: Int, minutesDepart: Int, hoursArrive: Int, minute
  * Например, 100 рублей под 10% годовых превратятся в 133.1 рубля
  */
 fun accountInThreeYears(initial: Int, percent: Int): Double =
-    initial * (percent / 100.0 + 1.0) * (percent / 100.0 + 1.0) * (percent / 100.0 + 1.0)
+    initial * (percent/100.0 + 1.0) * (percent/100.0 + 1.0) * (percent/100.0 + 1.0)
 
 
 /**
@@ -146,7 +152,9 @@ fun numberRevert(number: Int): Int {
     val n2 = number / 10
     val b = n2 % 10
     val a = n2 / 10
+    println('a' + 1)
     return c * 100 + b * 10 + a
+
 }
 
 //fun myFun(table: Map<String,Int>,taxes : String): Collection<Any>{
@@ -162,36 +170,69 @@ fun numberRevert(number: Int): Int {
 //        }
 //    }
 //}
-fun myfun(taxes: String, money: Int): Any {
-//    val str = taxes.split("y.e. - ")
-    var result = 0
-    var count = money
-    var previous = 0
-    if (Regex("""(\d+\sy.e. - \d+%; )+else - \d+%""").matches(taxes)){
-        var lastpercent = taxes.takeLast(3)
-        lastpercent = lastpercent.replace("%","")
-        for (i in taxes.split("; ")){
-            var str = i.replace("%","")
-            val (sum, percent) = str.split(" y.e. - ")
-            if (count > 0){
-                if (sum == "else"){
-                    result += (money - previous) * (lastpercent.toInt() / 100)
-                } else {
-//                    println(sum)
-//                    println(percent)
-//                    println(result)
-//                    println(previous)
-                    println(sum.toInt())
-                    println(percent.toInt())
-                    println(sum.toInt() * (percent.toInt() / 100))
-                    result += sum.toInt() * (percent.toInt() / 100)
-                    count -= (sum.toInt() - previous)
-                    previous = sum.toInt()
-                }
+//fun myfun(taxes: String, money: Int): Any {
+////    val str = taxes.split("y.e. - ")
+//    var result = 0
+//    var count = money
+//    var previous = 0
+//    if (Regex("""(\d+\sy.e. - \d+%; )+else - \d+%""").matches(taxes)){
+//        var lastpercent = taxes.takeLast(3)
+//        lastpercent = lastpercent.replace("%","")
+//        for (i in taxes.split("; ")){
+//            var str = i.replace("%","")
+//            val (sum, percent) = str.split(" y.e. - ")
+//            if (count > 0){
+//                if (sum == "else"){
+//                    result += (money - previous) * (lastpercent.toInt() / 100)
+//                } else {
+////                    println(sum)
+////                    println(percent)
+////                    println(result)
+////                    println(previous)
+//                    println(sum.toInt())
+//                    println(percent.toInt())
+//                    println(sum.toInt() * (percent.toInt() / 100))
+//                    result += sum.toInt() * (percent.toInt() / 100)
+//                    count -= (sum.toInt() - previous)
+//                    previous = sum.toInt()
+//                }
+//            }
+//        }
+//    } else {
+//        throw IllegalArgumentException("")
+//    }
+//    return result
+//}
+fun myFun(inputName: String, range: String): Double {
+    var (x, y) = range.split("-")
+    println(x)
+    println(y)
+    var sort = '%'
+    var x1 = x[0]
+    var y1 = x[1]
+    var x2 = y[0]
+    var y2 = y[1]
+    if (x1 > x2) {
+        sort = x2
+        x2 = x1
+        x1 = sort
+    }
+    if (y1 > y2) {
+        sort = y2
+        y2 = x1
+        x1 = sort
+    }
+    var count = 0
+    var res = mutableListOf<Double>()
+    for (line in inputName.split("\n")) {
+        count++
+        var part = line.split(", ")
+        for (i in 0 until part.size){
+            if (('A'.toInt() + i) in x1.toInt()..x2.toInt() && count in y1.toString().toInt()..y2.toString().toInt()){
+                res.add(part[i].toDouble())
             }
         }
-    } else {
-        throw IllegalArgumentException("")
     }
-    return result
+    println(res)
+    return res.average()
 }
