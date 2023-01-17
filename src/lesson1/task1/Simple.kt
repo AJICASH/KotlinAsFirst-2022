@@ -236,3 +236,24 @@ fun myFun(inputName: String, range: String): Double {
     println(res)
     return res.average()
 }
+
+
+fun FormulaOne(inputName: String): Collection<Any> {
+    var list = mutableListOf<String>()
+    var result = mutableMapOf<String, Int>()
+    for (line in inputName.split("\n")){
+        if (line matches Regex("""[А-я]\.\s[А-я\s\-]+\,\s[А-я\s]+\,\s[0-9]+""")){
+            list += line
+        }
+    }
+    for (i in 0 until list.size){
+        var(name, team, score) = list[i].split(", ")
+        if (result.containsKey(team)) {
+            result.put(team, result.get(team)!! + score.toInt());
+        } else {
+            result.put(team, score.toInt());
+        }
+    }
+//
+    return result.entries.sortedBy { it.value }.reversed()
+}
