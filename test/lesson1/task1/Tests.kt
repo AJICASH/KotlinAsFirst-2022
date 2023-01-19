@@ -3,6 +3,7 @@ package lesson1.task1
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
+import java.io.File
 import kotlin.math.PI
 
 class Tests {
@@ -122,7 +123,12 @@ class Tests {
     @Test
     fun FormulaOne() {
         assertEquals(
-            2.73,
+            mapOf(
+                "Мерседес" to 20,
+                "Феррари" to 11,
+                "Ред Булл" to 9,
+                "Макларен" to 9
+            ),
             FormulaOne(
                 """Гран-при Австралии:
                     |Л. Хэмилтон, Мерседес, 8
@@ -141,5 +147,10 @@ class Tests {
                     |В. Боттас, Мерседес, 1""".trimMargin()
             )
         )
+    }
+    @Test
+    fun foo() {
+        assertEquals("трамвай 3",
+            foo("input/foo_in1.txt", "Парк отдыха", "ул. Дворцовая"))
     }
 }

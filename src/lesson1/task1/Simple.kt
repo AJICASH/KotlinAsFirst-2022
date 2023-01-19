@@ -3,6 +3,8 @@
 
 package lesson1.task1
 
+import ru.spbstu.wheels.toMutableMap
+import java.io.File
 import java.lang.IllegalArgumentException
 import kotlin.math.*
 
@@ -227,7 +229,7 @@ fun myFun(inputName: String, range: String): Double {
     for (line in inputName.split("\n")) {
         count++
         var part = line.split(", ")
-        for (i in 0 until part.size){
+        for (i in part.indices){
             if (('A'.toInt() + i) in x1.toInt()..x2.toInt() && count in y1.toString().toInt()..y2.toString().toInt()){
                 res.add(part[i].toDouble())
             }
@@ -238,7 +240,7 @@ fun myFun(inputName: String, range: String): Double {
 }
 
 
-fun FormulaOne(inputName: String): Collection<Any> {
+fun FormulaOne(inputName: String): MutableMap<String, Int> {
     var list = mutableListOf<String>()
     var result = mutableMapOf<String, Int>()
     for (line in inputName.split("\n")){
@@ -255,5 +257,27 @@ fun FormulaOne(inputName: String): Collection<Any> {
         }
     }
 //
-    return result.entries.sortedBy { it.value }.reversed()
+    return result.entries.sortedBy { it.value }.reversed().toMutableMap()
+}
+fun foo(inputName: String, src: String, dst: String): String{
+
+    var result = ""
+    for (line in File(inputName).readLines()){
+        println(line)
+        if (line.contains(src) && line.contains(dst)){
+            var spacecount = 0
+            for (i in line.indices){
+                result += line[i]
+                println(result)
+                if (line[i + 1] == ' '){
+                    spacecount += 1
+                }
+                println(spacecount)
+                if (spacecount == 2){
+                    return result
+                }
+            }
+        }
+    }
+    return result
 }

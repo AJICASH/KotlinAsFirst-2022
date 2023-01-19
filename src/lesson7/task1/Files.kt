@@ -156,6 +156,7 @@ fun sibilants(inputName: String, outputName: String) {
  *
  */
 fun centerFile(inputName: String, outputName: String) {
+    println(inputName)
     val result = File(outputName).bufferedWriter()
     result.use{
         var maxline = -1
